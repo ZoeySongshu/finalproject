@@ -13,18 +13,28 @@
         android:layout_height="200dp"
         android:src="@drawable/app_icon"/>
 
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/databutton"/>
+
     <TextView
         android:id="@+id/summary"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:layout_margin="16dp"/>
+
+    <TextView
+        android:id="@+id/sourceURL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:textColor="@color/black"
         android:layout_margin="16dp"/>
 
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/databutton"/>
+
 
 </LinearLayout>

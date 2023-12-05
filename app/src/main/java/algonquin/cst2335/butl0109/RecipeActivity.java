@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.AdapterView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,7 +28,7 @@ import algonquin.cst2335.butl0109.databinding.ActivityMainBinding;
  * @author Ryan Butler
  * @Version 1.0
  */
-public class MainActivity extends AppCompatActivity implements WebAdapter.OnItemClickListener {
+public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnItemClickListener {
 
     public static final String EXTRA_URL = "imageurl";
     public static final String EXTRA_TITLE = "title";
@@ -76,9 +75,9 @@ public class MainActivity extends AppCompatActivity implements WebAdapter.OnItem
 
                                     jInfo.add(new WebInfo(imageURL, title, id));
                                 }
-                                jAdapter = new WebAdapter(MainActivity.this, jInfo);
+                                jAdapter = new WebAdapter(RecipeActivity.this, jInfo);
                                 jRecyclerView.setAdapter(jAdapter);
-                                jAdapter.setOnItemClickListener((AdapterView.OnItemClickListener) MainActivity.this);
+                                jAdapter.setOnItemClickListener((WebAdapter.OnItemClickListener) RecipeActivity.this);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }

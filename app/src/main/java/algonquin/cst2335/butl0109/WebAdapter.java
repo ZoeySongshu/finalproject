@@ -16,18 +16,15 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class WebAdapter extends RecyclerView.Adapter<WebAdapter.webViewHolder> {
-
-    private Context jContext;
-    private ArrayList<WebInfo> jInfoList;
-    private onItemClickListener jListener;
-
-    public interface onItemClickListener {
-
+    public interface OnItemClickListener {
         void onItemClick(int position);
     }
+    private Context jContext;
+    private ArrayList<WebInfo> jInfoList;
+    private OnItemClickListener jListener;
 
-    public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
-        jListener = (onItemClickListener) listener;
+    public void setOnItemClickListener(WebAdapter.OnItemClickListener listener) {
+        jListener = listener;
     }
     public WebAdapter(Context context, ArrayList<WebInfo> infoList) {
         jContext = context;
@@ -59,9 +56,7 @@ public class WebAdapter extends RecyclerView.Adapter<WebAdapter.webViewHolder> {
         return jInfoList.size();
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
+
 
     public class webViewHolder extends RecyclerView.ViewHolder {
         public ImageView jImage;
@@ -73,12 +68,16 @@ public class WebAdapter extends RecyclerView.Adapter<WebAdapter.webViewHolder> {
             jTitle = itemView.findViewById(R.id.titleText);
             jId = itemView.findViewById(R.id.idText);
 
-            itemView.setOnClickListener(view -> {
-                if (jListener != null) {
-                    int position = getAbsoluteAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        jListener.onItemClick(position);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (jListener != null) {
+                        int position = getAbsoluteAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            jListener.onItemClick(position);
+                        }
                     }
+
                 }
             });
         }

@@ -1,26 +1,24 @@
 package algonquin.cst2335.butl0109;
 
-import static algonquin.cst2335.butl0109.MainActivity.EXTRA_ID;
-import static algonquin.cst2335.butl0109.MainActivity.EXTRA_TITLE;
-import static algonquin.cst2335.butl0109.MainActivity.EXTRA_URL;
+import static algonquin.cst2335.butl0109.RecipeActivity.EXTRA_ID;
+import static algonquin.cst2335.butl0109.RecipeActivity.EXTRA_TITLE;
+import static algonquin.cst2335.butl0109.RecipeActivity.EXTRA_URL;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,6 +33,7 @@ public class Detail extends AppCompatActivity {
     private ArrayList<WebInfo> jInfo;
     String searchTerm;
 
+    Context jContext;
     private RequestQueue jRequest;
 
     @Override
@@ -60,6 +59,8 @@ public class Detail extends AppCompatActivity {
         }
         String url = "https://api.spoonacular.com/recipes/" + searchTerm + "/information?apiKey=03477e102d7b4a69bbe63ef6989afbe7";
 
+        jRequest = Volley.newRequestQueue(this);
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>(){
                     @Override
@@ -67,6 +68,12 @@ public class Detail extends AppCompatActivity {
                         try {
                             String summary = response.getString("summary");
                             binding.summary.setText(summary);
+                            String imageURL = response.getString("image");
+                            Picasso.with(jContext)
+                                    .load(imageURL)
+                                    .into(imageView);
+                            String sourceURL = response.getString("sourceUrl");
+                            binding.sourceURL.setText(sourceURL);
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
@@ -79,6 +86,5 @@ public class Detail extends AppCompatActivity {
         });
         jRequest.add(request);
     };
-
 
 }

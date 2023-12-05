@@ -33,8 +33,8 @@ import org.junit.runner.RunWith;
 public class NoNumberTest {
 
     @Rule
-    public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
-            new ActivityScenarioRule<>(MainActivity.class);
+    public ActivityScenarioRule<RecipeActivity> mActivityScenarioRule =
+            new ActivityScenarioRule<>(RecipeActivity.class);
 
     @Test
     public void noNumberTest() {
