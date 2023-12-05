@@ -19,14 +19,20 @@ public class WebAdapter extends RecyclerView.Adapter<WebAdapter.webViewHolder> {
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
+
+    /** stores context for the adapter */
     private Context jContext;
+
+    /** stores JSON data in array for the adapter */
     private ArrayList<WebInfo> jInfoList;
+
+    /** used for tracking when the adapter is clicked */
     private OnItemClickListener jListener;
 
-    public void setOnItemClickListener(WebAdapter.OnItemClickListener listener) {
+    public void setOnItemClickListener(WebAdapter.OnItemClickListener listener) { /** onclicklistener constructor */
         jListener = listener;
     }
-    public WebAdapter(Context context, ArrayList<WebInfo> infoList) {
+    public WebAdapter(Context context, ArrayList<WebInfo> infoList) { /** adatper constructor */
         jContext = context;
         jInfoList = infoList;
     }
@@ -52,13 +58,11 @@ public class WebAdapter extends RecyclerView.Adapter<WebAdapter.webViewHolder> {
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount() { /** tracks array length */
         return jInfoList.size();
     }
 
-
-
-    public class webViewHolder extends RecyclerView.ViewHolder {
+    public class webViewHolder extends RecyclerView.ViewHolder { /** binds JSON data to adapter elements */
         public ImageView jImage;
         public TextView jTitle;
         public TextView jId;
