@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -51,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<webInfo> jInfo;
     private RequestQueue jRequest;
 
+    String searchTerm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +71,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void parseJSON() {
+        searchTerm = URLEncoder.encode(binding.edittext.getText().toString(), "UTF-8");
+        String url = "https://api.spoonacular.com/recipes/complexSearch?query=" + searchTerm + "&apiKey=03477e102d7b4a69bbe63ef6989afbe7";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+            new Response.Listener<JSONObject>(){
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("results");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject result = jsonArray.getJSONObject(i);
 
-        String url = "https://api.spoonacular.com/recipes/complexSearch?query="  + "&apiKey=03477e102d7b4a69bbe63ef6989afbe7"
+                        String title = result.getString("title");
+                        int id = result.getInt("id");
+                        String imageURL = result.getString("image");
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error){
+                error.printStackTrace();
+            }
+        });
     }
 }
