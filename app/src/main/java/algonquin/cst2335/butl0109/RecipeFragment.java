@@ -25,7 +25,7 @@ public class RecipeFragment extends Fragment {
 
         binding.textView2.setText(selected.getTitle());
 
-
         return binding.getRoot();
     }
+
 }

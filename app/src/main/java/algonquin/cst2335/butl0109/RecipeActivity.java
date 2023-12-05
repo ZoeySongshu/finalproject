@@ -153,6 +153,7 @@ public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnIt
 
         return true;
     }
+
     @Override
     public void onItemClick(int position) { /** grabs recyclerview position, passes relevant information to next activity */
         Intent detailIntent = new Intent(this, Detail.class);
