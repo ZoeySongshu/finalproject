@@ -71,7 +71,7 @@ public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnIt
 
         setSupportActionBar(binding.myToolbar); /** makes toolbar visible */
 
-        SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("RecipeData", Context.MODE_PRIVATE);
         String savedText = prefs.getString("SearchText", "");
         binding.edittext.setText(savedText);  /** sets the edittext to the stored value */
 

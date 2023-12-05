@@ -70,7 +70,7 @@ public class Detail extends AppCompatActivity {
 
         setSupportActionBar(binding.myToolbar2); /** makes toolbar visible */
 
-        SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("RecipeData", Context.MODE_PRIVATE);
         String savedText = prefs.getString("EditText", "");
         binding.otherEditText.setText(savedText);
 
