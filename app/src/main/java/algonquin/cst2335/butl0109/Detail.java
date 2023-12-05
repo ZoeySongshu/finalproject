@@ -1,9 +1,11 @@
 package algonquin.cst2335.butl0109;
 
+import static android.app.ProgressDialog.show;
 import static algonquin.cst2335.butl0109.RecipeActivity.EXTRA_ID;
 import static algonquin.cst2335.butl0109.RecipeActivity.EXTRA_TITLE;
 import static algonquin.cst2335.butl0109.RecipeActivity.EXTRA_URL;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -13,8 +15,10 @@ import androidx.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -99,6 +104,16 @@ public class Detail extends AppCompatActivity {
             }
         });
         jRequest.add(request);
+        Button button = findViewById(R.id.saveButton);
+        button.setOnClickListener(clk -> {
+            Toast.makeText(getApplicationContext(),"Idk how to make a database lol",
+                    Toast.LENGTH_SHORT).show();
+            Snackbar.make(binding.getRoot(), "Idk how to make a database lol", Snackbar.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(searchTerm)
+                    .setMessage(searchTerm).show();
+        });
     };
+
 
 }

@@ -1,5 +1,6 @@
 package algonquin.cst2335.butl0109;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -93,6 +94,10 @@ public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnIt
             });
             Toast.makeText(getApplicationContext(),searchTerm,
                     Toast.LENGTH_SHORT).show();
+            Snackbar.make(binding.getRoot(), searchTerm, Snackbar.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(searchTerm)
+                    .setMessage(searchTerm).show();
             jRequest.add(request);
         });
     }
