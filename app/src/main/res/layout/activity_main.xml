@@ -10,9 +10,9 @@
         android:id="@+id/myToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_constraintToptoTopof="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/my_primary"/>
 
     <TextView
         android:id="@+id/textView"

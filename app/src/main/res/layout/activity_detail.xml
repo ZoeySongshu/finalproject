@@ -10,19 +10,29 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/myToolbar2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@color/my_primary"/>
 
     <ImageView
         android:id="@+id/detailImage"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         android:src="@drawable/app_icon"/>
 
+    <EditText
+        android:id="@+id/otherEditText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/funnyEditText"
+        android:gravity="center_horizontal"
+        />
+
     <Button
-        android:id="@+id/saveButton"
+        android:id="@+id/editButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/data_button"/>
+        android:text="@string/editButton"
+        />
 
     <TextView
         android:id="@+id/summaryName"
@@ -32,12 +42,13 @@
         android:textColor="@color/black"
         android:layout_margin="16dp"
         android:text="@string/summary"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal"
+        android:background="@color/my_statusbar"/>
 
     <TextView
         android:id="@+id/summary"
         android:layout_width="wrap_content"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         android:textSize="15sp"
         android:textColor="@color/black" />
 
@@ -49,7 +60,8 @@
         android:textColor="@color/black"
         android:text="@string/sourceURL"
         android:layout_margin="8dp"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal"
+        android:background="@color/my_statusbar"/>
 
     <TextView
         android:id="@+id/sourceURL"
@@ -58,6 +70,12 @@
         android:textSize="15sp"
         android:textColor="@color/black"
         />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/data_button"/>
 
 
 

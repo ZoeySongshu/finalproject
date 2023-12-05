@@ -6,4 +6,6 @@
     <string name="prompt">Enter recipe here</string>
     <string name="summary">Summary</string>
     <string name="sourceURL">Source URL</string>
+    <string name="funnyEditText">This doesn\'t do anything</string>
+    <string name="editButton">Save this text</string>
 </resources>

@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,15 +39,28 @@ import algonquin.cst2335.butl0109.databinding.ActivityMainBinding;
  */
 public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnItemClickListener {
 
+    /* stores imageurl value */
     public static final String EXTRA_URL = "imageurl";
+
+    /* stores title value */
     public static final String EXTRA_TITLE = "title";
+
+    /* stores id value */
     public static final String EXTRA_ID = "id";
+
+    /* for manipulating recyclerview */
     private RecyclerView jRecyclerView;
+
+    /* adapter for recyclerview */
     private WebAdapter jAdapter;
+
+    /* array of information to go into recyclerview */
     private ArrayList<WebInfo> jInfo;
+
+    /* obtains JSON information */
     private RequestQueue jRequest;
 
-
+    /* stores value entered in the edittext */
     String searchTerm;
 
     @Override
@@ -54,17 +69,21 @@ public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnIt
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.myToolbar);
+        setSupportActionBar(binding.myToolbar); /* makes toolbar visible */
+
+        SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        String savedText = prefs.getString("SearchText", "");
+        binding.edittext.setText(savedText);  /* sets the edittext to the stored value */
 
 
         jRecyclerView = findViewById(R.id.recyclerView);
         jRecyclerView.setHasFixedSize(true);
-        jRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        jRecyclerView.setLayoutManager(new LinearLayoutManager(this)); /* controls how the recyclerview displays */
 
-        jInfo = new ArrayList<>();
+        jInfo = new ArrayList<>(); /* array of data to be shown in the recyclerview */
 
-        jRequest = Volley.newRequestQueue(this);
-        binding.button.setOnClickListener(click -> {
+        jRequest = Volley.newRequestQueue(this); /* creates request for JSON information */
+        binding.button.setOnClickListener(click -> { /* enters the search value, acquires search hits from server */
             try {
                 searchTerm = URLEncoder.encode(binding.edittext.getText().toString(), "UTF-8");
             } catch (UnsupportedEncodingException e) {
@@ -74,8 +93,8 @@ public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnIt
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONObject>(){
                         @Override
-                        public void onResponse(JSONObject response) {
-                            try {
+                        public void onResponse(JSONObject response) { /* fills the recyclerview with information, */
+                            try {                                     /* size changes based on number of search results */
                                 JSONArray jsonArray = response.getJSONArray("results");
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject result = jsonArray.getJSONObject(i);
@@ -89,6 +108,8 @@ public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnIt
                                 jAdapter = new WebAdapter(RecipeActivity.this, jInfo);
                                 jRecyclerView.setAdapter(jAdapter);
                                 jAdapter.setOnItemClickListener((WebAdapter.OnItemClickListener) RecipeActivity.this);
+                                /* controls behavior for when objects in recyclerview */
+                                /* are clicked */
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
@@ -99,44 +120,49 @@ public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnIt
                     error.printStackTrace();
                 }
             });
-            Toast.makeText(getApplicationContext(),searchTerm,
+            Toast.makeText(getApplicationContext(),searchTerm, /* displays a Toast on button click */
                     Toast.LENGTH_SHORT).show();
-            Snackbar.make(binding.getRoot(), searchTerm, Snackbar.LENGTH_SHORT).show();
-            new AlertDialog.Builder(this)
-                    .setTitle(searchTerm)
-                    .setMessage(searchTerm).show();
+            Snackbar.make(binding.getRoot(), searchTerm, Snackbar.LENGTH_SHORT).show(); /* displays a snackbar on button click */
             jRequest.add(request);
+            String userInput = binding.edittext.getText().toString();
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("SearchText", userInput);
+            editor.apply();
         });
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) { /* makes toolbar menu visible */
         getMenuInflater().inflate(R.menu.my_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) { /* displays help AlertDialog when toolbar menu option is clicked */
 
         switch( item.getItemId() )
         {
             case R.id.item_1:
 
-                //put your ChatMessage deletion code here. If you select this item, you should show the alert dialog
-                //asking if the user wants to delete this message.
+                AlertDialog.Builder builder = new AlertDialog.Builder(RecipeActivity.this);
+                builder.setMessage("Enter a recipe into the text field");
+                builder.show();
+
                 break;
         }
 
         return true;
     }
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(int position) { /* grabs recyclerview position, passes relevant information to next activity */
         Intent detailIntent = new Intent(this, Detail.class);
         WebInfo clickedItem = jInfo.get(position);
 
         detailIntent.putExtra(EXTRA_URL, clickedItem.getImageUrl());
         detailIntent.putExtra(EXTRA_TITLE, clickedItem.getTitle());
         detailIntent.putExtra(EXTRA_ID, clickedItem.getIdInfo());
+
+
 
         startActivity(detailIntent);
     }
