@@ -7,16 +7,16 @@ import androidx.room.Query;
 
 import java.util.List;
 
-@Dao
+
 public interface DetailDAO {
 
-    @Insert
+
     public long insertDetail(Detail d);
 
-    @Query("Select * from Detail")
+
     public List<Detail> getAllDetails();
 
-    @Delete
+
     void deleteDetails(Detail d);
 
 }

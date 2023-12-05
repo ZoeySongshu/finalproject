@@ -13,6 +13,7 @@ import androidx.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.android.volley.Request;
@@ -29,22 +30,21 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import algonquin.cst2335.butl0109.databinding.ActivityDetailBinding;
 
-@Entity
+
 public class Detail extends AppCompatActivity {
 
     private ArrayList<WebInfo> jInfo;
     String searchTerm;
 
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name="id")
     String id;
 
-    @ColumnInfo(name="title")
     String title;
-    @ColumnInfo(name="summary")
+
     String summary;
 
     Context jContext;
@@ -56,8 +56,6 @@ public class Detail extends AppCompatActivity {
         ActivityDetailBinding binding = ActivityDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        DetailDatabase db = Room.databaseBuilder(getApplicationContext(), DetailDatabase.class, "database-name").build();
-        DetailDAO dDAO = db.detailDAO();
 
         Intent intent = getIntent();
         String imageURL = intent.getStringExtra(EXTRA_URL);
