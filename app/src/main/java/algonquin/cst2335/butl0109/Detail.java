@@ -47,18 +47,17 @@ import algonquin.cst2335.butl0109.databinding.ActivityDetailBinding;
 
 public class Detail extends AppCompatActivity {
 
-    private ArrayList<WebInfo> jInfo;
 
-    /* stores id value from previous activity */
+    /** stores id value from previous activity */
     String searchTerm;
 
-    /* stores summary information from JSON request */
+    /** stores summary information from JSON request */
     String summary;
 
-    /* provides context for imagerequest */
+    /** provides context for imagerequest */
     Context jContext;
 
-    /* queues JSON data request */
+    /** queues JSON data request */
     private RequestQueue jRequest;
 
 
@@ -69,18 +68,17 @@ public class Detail extends AppCompatActivity {
         ActivityDetailBinding binding = ActivityDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.myToolbar2); /* makes toolbar visible */
+        setSupportActionBar(binding.myToolbar2); /** makes toolbar visible */
 
         SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         String savedText = prefs.getString("EditText", "");
         binding.otherEditText.setText(savedText);
 
-        Intent intent = getIntent(); /* receives information from previous activity */
+        Intent intent = getIntent(); /** receives information from previous activity */
         String imageURL = intent.getStringExtra(EXTRA_URL);
         String title = intent.getStringExtra(EXTRA_TITLE);
         String id = intent.getStringExtra(EXTRA_ID);
 
-        jInfo = new ArrayList<>();
 
         ImageView imageView = findViewById(R.id.detailImage);
 
@@ -91,12 +89,12 @@ public class Detail extends AppCompatActivity {
         }
         String url = "https://api.spoonacular.com/recipes/" + searchTerm + "/information?apiKey=03477e102d7b4a69bbe63ef6989afbe7";
 
-        jRequest = Volley.newRequestQueue(this); /* fetches JSON information */
+        jRequest = Volley.newRequestQueue(this); /** fetches JSON information */
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>(){
                     @Override
-                    public void onResponse(JSONObject response) { /* populates textviews and imageview with JSON data  */
+                    public void onResponse(JSONObject response) { /** populates textviews and imageview with JSON data  */
                         try {
                             summary = response.getString("summary");
                             binding.summary.setText(summary);
@@ -116,16 +114,16 @@ public class Detail extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
-        jRequest.add(request); /* queues JSON request */
+        jRequest.add(request); /** queues JSON request */
 
-        Button button = findViewById(R.id.saveButton); /* displays Toast and Snackbar when button is clicked */
+        Button button = findViewById(R.id.saveButton); /** displays Toast and Snackbar when button is clicked */
         button.setOnClickListener(clk -> {
             Toast.makeText(getApplicationContext(),"Idk how to make a database lol",
                     Toast.LENGTH_SHORT).show();
             Snackbar.make(binding.getRoot(), "Idk how to make a database lol", Snackbar.LENGTH_SHORT).show();
         });
 
-        Button editButton = findViewById(R.id.editButton); /* saves value in edittext to sharedprefs folder */
+        Button editButton = findViewById(R.id.editButton); /** saves value in edittext to sharedprefs folder */
         editButton.setOnClickListener(click -> {
             String userInput = binding.otherEditText.getText().toString();
             SharedPreferences.Editor editor = prefs.edit();
@@ -135,13 +133,13 @@ public class Detail extends AppCompatActivity {
     };
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) { /* makes toolbar menu visible */
+    public boolean onCreateOptionsMenu(Menu menu) { /** makes toolbar menu visible */
         getMenuInflater().inflate(R.menu.my_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) { /* displays help AlertDialog when toolbar menu option is clicked */
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) { /** displays help AlertDialog when toolbar menu option is clicked */
 
         switch( item.getItemId() )
         {

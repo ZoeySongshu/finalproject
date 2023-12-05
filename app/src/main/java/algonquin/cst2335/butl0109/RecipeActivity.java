@@ -33,34 +33,34 @@ import java.util.ArrayList;
 
 import algonquin.cst2335.butl0109.databinding.ActivityMainBinding;
 
-/**
+/***
  * @author Ryan Butler
  * @Version 1.0
  */
 public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnItemClickListener {
 
-    /* stores imageurl value */
+    /** stores imageurl value */
     public static final String EXTRA_URL = "imageurl";
 
-    /* stores title value */
+    /** stores title value */
     public static final String EXTRA_TITLE = "title";
 
-    /* stores id value */
+    /** stores id value */
     public static final String EXTRA_ID = "id";
 
-    /* for manipulating recyclerview */
+    /** for manipulating recyclerview */
     private RecyclerView jRecyclerView;
 
-    /* adapter for recyclerview */
+    /** adapter for recyclerview */
     private WebAdapter jAdapter;
 
-    /* array of information to go into recyclerview */
+    /** array of information to go into recyclerview */
     private ArrayList<WebInfo> jInfo;
 
-    /* obtains JSON information */
+    /** obtains JSON information */
     private RequestQueue jRequest;
 
-    /* stores value entered in the edittext */
+    /** stores value entered in the edittext */
     String searchTerm;
 
     @Override
@@ -69,21 +69,21 @@ public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnIt
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.myToolbar); /* makes toolbar visible */
+        setSupportActionBar(binding.myToolbar); /** makes toolbar visible */
 
         SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         String savedText = prefs.getString("SearchText", "");
-        binding.edittext.setText(savedText);  /* sets the edittext to the stored value */
+        binding.edittext.setText(savedText);  /** sets the edittext to the stored value */
 
 
         jRecyclerView = findViewById(R.id.recyclerView);
         jRecyclerView.setHasFixedSize(true);
-        jRecyclerView.setLayoutManager(new LinearLayoutManager(this)); /* controls how the recyclerview displays */
+        jRecyclerView.setLayoutManager(new LinearLayoutManager(this)); /** controls how the recyclerview displays */
 
-        jInfo = new ArrayList<>(); /* array of data to be shown in the recyclerview */
+        jInfo = new ArrayList<>(); /** array of data to be shown in the recyclerview */
 
-        jRequest = Volley.newRequestQueue(this); /* creates request for JSON information */
-        binding.button.setOnClickListener(click -> { /* enters the search value, acquires search hits from server */
+        jRequest = Volley.newRequestQueue(this); /** creates request for JSON information */
+        binding.button.setOnClickListener(click -> { /** enters the search value, acquires search hits from server */
             try {
                 searchTerm = URLEncoder.encode(binding.edittext.getText().toString(), "UTF-8");
             } catch (UnsupportedEncodingException e) {
@@ -93,8 +93,8 @@ public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnIt
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONObject>(){
                         @Override
-                        public void onResponse(JSONObject response) { /* fills the recyclerview with information, */
-                            try {                                     /* size changes based on number of search results */
+                        public void onResponse(JSONObject response) { /** fills the recyclerview with information, */
+                            try {                                     /** size changes based on number of search results */
                                 JSONArray jsonArray = response.getJSONArray("results");
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject result = jsonArray.getJSONObject(i);
@@ -108,8 +108,8 @@ public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnIt
                                 jAdapter = new WebAdapter(RecipeActivity.this, jInfo);
                                 jRecyclerView.setAdapter(jAdapter);
                                 jAdapter.setOnItemClickListener((WebAdapter.OnItemClickListener) RecipeActivity.this);
-                                /* controls behavior for when objects in recyclerview */
-                                /* are clicked */
+                                /** controls behavior for when objects in recyclerview */
+                                /** are clicked */
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
@@ -120,9 +120,9 @@ public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnIt
                     error.printStackTrace();
                 }
             });
-            Toast.makeText(getApplicationContext(),searchTerm, /* displays a Toast on button click */
+            Toast.makeText(getApplicationContext(),searchTerm, /** displays a Toast on button click */
                     Toast.LENGTH_SHORT).show();
-            Snackbar.make(binding.getRoot(), searchTerm, Snackbar.LENGTH_SHORT).show(); /* displays a snackbar on button click */
+            Snackbar.make(binding.getRoot(), searchTerm, Snackbar.LENGTH_SHORT).show(); /** displays a snackbar on button click */
             jRequest.add(request);
             String userInput = binding.edittext.getText().toString();
             SharedPreferences.Editor editor = prefs.edit();
@@ -132,13 +132,13 @@ public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnIt
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) { /* makes toolbar menu visible */
+    public boolean onCreateOptionsMenu(Menu menu) { /** makes toolbar menu visible */
         getMenuInflater().inflate(R.menu.my_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) { /* displays help AlertDialog when toolbar menu option is clicked */
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) { /** displays help AlertDialog when toolbar menu option is clicked */
 
         switch( item.getItemId() )
         {
@@ -154,7 +154,7 @@ public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnIt
         return true;
     }
     @Override
-    public void onItemClick(int position) { /* grabs recyclerview position, passes relevant information to next activity */
+    public void onItemClick(int position) { /** grabs recyclerview position, passes relevant information to next activity */
         Intent detailIntent = new Intent(this, Detail.class);
         WebInfo clickedItem = jInfo.get(position);
 
