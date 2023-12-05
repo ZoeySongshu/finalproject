@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         jInfo = new ArrayList<>();
 
         jRequest = Volley.newRequestQueue(this);
-        parseJSON();
+        binding.button.setOnClickListener();
     }
 
     private void parseJSON() {
