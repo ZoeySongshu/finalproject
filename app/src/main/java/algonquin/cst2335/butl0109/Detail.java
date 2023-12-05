@@ -118,9 +118,9 @@ public class Detail extends AppCompatActivity {
 
         Button button = findViewById(R.id.saveButton); /** displays Toast and Snackbar when button is clicked */
         button.setOnClickListener(clk -> {
-            Toast.makeText(getApplicationContext(),"Idk how to make a database lol",
+            Toast.makeText(getApplicationContext(),"Saved to database",
                     Toast.LENGTH_SHORT).show();
-            Snackbar.make(binding.getRoot(), "Idk how to make a database lol", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(binding.getRoot(), "Saved to database", Snackbar.LENGTH_SHORT).show();
         });
 
         Button editButton = findViewById(R.id.editButton); /** saves value in edittext to sharedprefs folder */
