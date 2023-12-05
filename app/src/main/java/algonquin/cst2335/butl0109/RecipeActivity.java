@@ -42,6 +42,7 @@ public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnIt
     private ArrayList<WebInfo> jInfo;
     private RequestQueue jRequest;
 
+
     String searchTerm;
 
     @Override
@@ -49,6 +50,9 @@ public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnIt
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        setSupportActionBar(binding.myToolbar);
+
 
         jRecyclerView = findViewById(R.id.recyclerView);
         jRecyclerView.setHasFixedSize(true);
