@@ -67,34 +67,41 @@ public class MainActivity extends AppCompatActivity {
         jInfo = new ArrayList<>();
 
         jRequest = Volley.newRequestQueue(this);
-        binding.button.setOnClickListener();
-    }
+        binding.button.setOnClickListener(click -> {
+            try {
+                searchTerm = URLEncoder.encode(binding.edittext.getText().toString(), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+            String url = "https://api.spoonacular.com/recipes/complexSearch?query=" + searchTerm + "&apiKey=03477e102d7b4a69bbe63ef6989afbe7";
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                    new Response.Listener<JSONObject>(){
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                JSONArray jsonArray = response.getJSONArray("results");
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject result = jsonArray.getJSONObject(i);
 
-    private void parseJSON() {
-        searchTerm = URLEncoder.encode(binding.edittext.getText().toString(), "UTF-8");
-        String url = "https://api.spoonacular.com/recipes/complexSearch?query=" + searchTerm + "&apiKey=03477e102d7b4a69bbe63ef6989afbe7";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-            new Response.Listener<JSONObject>(){
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray jsonArray = response.getJSONArray("results");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject result = jsonArray.getJSONObject(i);
+                                    String title = result.getString("title");
+                                    int id = result.getInt("id");
+                                    String imageURL = result.getString("image");
 
-                        String title = result.getString("title");
-                        int id = result.getInt("id");
-                        String imageURL = result.getString("image");
-                    }
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
+                                    jInfo.add(new webInfo(imageURL, title, id));
+                                }
+                                jAdapter = new webAdapter(MainActivity.this, jInfo);
+                                jRecyclerView.setAdapter(jAdapter);
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error){
+                    error.printStackTrace();
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error){
-                error.printStackTrace();
-            }
+            });
+            jRequest.add(request);
         });
     }
 }
