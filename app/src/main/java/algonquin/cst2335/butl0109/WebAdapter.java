@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,12 +15,21 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class webAdapter extends RecyclerView.Adapter<webAdapter.webViewHolder> {
+public class WebAdapter extends RecyclerView.Adapter<WebAdapter.webViewHolder> {
 
     private Context jContext;
-    private ArrayList<webInfo> jInfoList;
+    private ArrayList<WebInfo> jInfoList;
+    private onItemClickListener jListener;
 
-    public webAdapter(Context context, ArrayList<webInfo> infoList) {
+    public interface onItemClickListener {
+
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
+        jListener = (onItemClickListener) listener;
+    }
+    public WebAdapter(Context context, ArrayList<WebInfo> infoList) {
         jContext = context;
         jInfoList = infoList;
     }
@@ -33,11 +43,11 @@ public class webAdapter extends RecyclerView.Adapter<webAdapter.webViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull webViewHolder holder, int position) {
-        webInfo currentItem = jInfoList.get(position);
+        WebInfo currentItem = jInfoList.get(position);
 
         String imageUrl = currentItem.getImageUrl();
         String title = currentItem.getTitle();
-        int id = currentItem.getIdInfo();
+        String id = currentItem.getIdInfo();
 
         holder.jTitle.setText(title);
         holder.jId.setText("Id: " + id);
@@ -49,6 +59,10 @@ public class webAdapter extends RecyclerView.Adapter<webAdapter.webViewHolder> {
         return jInfoList.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
     public class webViewHolder extends RecyclerView.ViewHolder {
         public ImageView jImage;
         public TextView jTitle;
@@ -58,6 +72,15 @@ public class webAdapter extends RecyclerView.Adapter<webAdapter.webViewHolder> {
             jImage = itemView.findViewById(R.id.webImage);
             jTitle = itemView.findViewById(R.id.titleText);
             jId = itemView.findViewById(R.id.idText);
+
+            itemView.setOnClickListener(view -> {
+                if (jListener != null) {
+                    int position = getAbsoluteAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        jListener.onItemClick(position);
+                    }
+                }
+            });
         }
     }
 }

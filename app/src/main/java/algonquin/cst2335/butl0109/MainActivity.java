@@ -1,55 +1,42 @@
 package algonquin.cst2335.butl0109;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.AdapterView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import algonquin.cst2335.butl0109.databinding.ActivityMainBinding;
-import algonquin.cst2335.butl0109.databinding.RecipeSearchBinding;
 
 /**
  * @author Ryan Butler
  * @Version 1.0
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements WebAdapter.OnItemClickListener {
+
+    public static final String EXTRA_URL = "imageurl";
+    public static final String EXTRA_TITLE = "title";
+    public static final String EXTRA_ID = "id";
     private RecyclerView jRecyclerView;
-    private webAdapter jAdapter;
-    private ArrayList<webInfo> jInfo;
+    private WebAdapter jAdapter;
+    private ArrayList<WebInfo> jInfo;
     private RequestQueue jRequest;
 
     String searchTerm;
@@ -84,13 +71,14 @@ public class MainActivity extends AppCompatActivity {
                                     JSONObject result = jsonArray.getJSONObject(i);
 
                                     String title = result.getString("title");
-                                    int id = result.getInt("id");
+                                    String id = result.getString("id");
                                     String imageURL = result.getString("image");
 
-                                    jInfo.add(new webInfo(imageURL, title, id));
+                                    jInfo.add(new WebInfo(imageURL, title, id));
                                 }
-                                jAdapter = new webAdapter(MainActivity.this, jInfo);
+                                jAdapter = new WebAdapter(MainActivity.this, jInfo);
                                 jRecyclerView.setAdapter(jAdapter);
+                                jAdapter.setOnItemClickListener((AdapterView.OnItemClickListener) MainActivity.this);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
@@ -103,5 +91,17 @@ public class MainActivity extends AppCompatActivity {
             });
             jRequest.add(request);
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent detailIntent = new Intent(this, Detail.class);
+        WebInfo clickedItem = jInfo.get(position);
+
+        detailIntent.putExtra(EXTRA_URL, clickedItem.getImageUrl());
+        detailIntent.putExtra(EXTRA_TITLE, clickedItem.getTitle());
+        detailIntent.putExtra(EXTRA_ID, clickedItem.getIdInfo());
+
+        startActivity(detailIntent);
     }
 }

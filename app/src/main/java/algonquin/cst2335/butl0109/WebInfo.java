@@ -1,12 +1,12 @@
 package algonquin.cst2335.butl0109;
 
-public class webInfo {
+public class WebInfo {
 
     private String jImageUrl;
-    private int jIdInfo;
+    private String jIdInfo;
     private String jTitleInfo;
 
-    public webInfo(String imageUrl, String titleInfo, int idInfo) {
+    public WebInfo(String imageUrl, String titleInfo, String idInfo) {
 
         jImageUrl = imageUrl;
         jTitleInfo = titleInfo;
@@ -21,7 +21,7 @@ public class webInfo {
         return jTitleInfo;
     }
 
-    public int getIdInfo(){
+    public String getIdInfo(){
         return jIdInfo;
     }
 }
