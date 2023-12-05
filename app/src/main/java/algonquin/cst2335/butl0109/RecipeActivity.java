@@ -31,7 +31,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import algonquin.cst2335.butl0109.databinding.ActivityMainBinding;
+import algonquin.cst2335.butl0109.databinding.ActivityRecipeBinding;
 
 /***
  * @author Ryan Butler
@@ -66,7 +66,7 @@ public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnIt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        ActivityRecipeBinding binding = ActivityRecipeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.myToolbar); /** makes toolbar visible */
