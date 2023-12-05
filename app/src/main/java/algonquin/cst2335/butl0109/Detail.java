@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import algonquin.cst2335.butl0109.databinding.ActivityDetailBinding;
 
+
 public class Detail extends AppCompatActivity {
 
     private ArrayList<WebInfo> jInfo;

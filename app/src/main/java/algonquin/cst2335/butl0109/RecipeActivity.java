@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -13,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -88,6 +91,8 @@ public class RecipeActivity extends AppCompatActivity implements WebAdapter.OnIt
                     error.printStackTrace();
                 }
             });
+            Toast.makeText(getApplicationContext(),searchTerm,
+                    Toast.LENGTH_SHORT).show();
             jRequest.add(request);
         });
     }

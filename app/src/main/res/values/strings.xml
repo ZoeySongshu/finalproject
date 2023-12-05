@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name">Ryan\'s Android Labs</string>
+    <string name="app_name">Ryan\'s Android Lab</string>
     <string name="recipe_search">Enter recipe</string>
     <string name="button_message">Search</string>
-    <string name="databutton">Save to database</string>
+    <string name="data_button">Save to database</string>
     <string name="prompt">Enter recipe here</string>
+    <string name="summary">Summary</string>
+    <string name="sourceURL">Source URL</string>
 </resources>

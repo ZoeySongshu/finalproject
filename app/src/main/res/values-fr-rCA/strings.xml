@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Ryan\'s Android Labs</string>
-    <string name="hello_message">Bonjour tout le monde!</string>
-    <string name="button_message">Je suis un bouton</string>
-    <string name="prompt">Type password here</string>
+    <string name="app_name">Ryan\'s Android Lab</string>
+    <string name="recipe_search">Entrez la recette</string>
+    <string name="button_message">Cherch</string>
+    <string name="data_button">Enregistrer dans la base de données</string>
+    <string name="prompt">Entrez la recette ici</string>
+    <string name="summary">Sommaire</string>
+    <string name="sourceURL">URL de source</string>
 </resources>
