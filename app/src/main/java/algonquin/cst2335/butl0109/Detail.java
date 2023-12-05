@@ -5,6 +5,10 @@ import static algonquin.cst2335.butl0109.RecipeActivity.EXTRA_TITLE;
 import static algonquin.cst2335.butl0109.RecipeActivity.EXTRA_URL;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.Room;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,11 +32,20 @@ import java.util.ArrayList;
 
 import algonquin.cst2335.butl0109.databinding.ActivityDetailBinding;
 
-
+@Entity
 public class Detail extends AppCompatActivity {
 
     private ArrayList<WebInfo> jInfo;
     String searchTerm;
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name="id")
+    String id;
+
+    @ColumnInfo(name="title")
+    String title;
+    @ColumnInfo(name="summary")
+    String summary;
 
     Context jContext;
     private RequestQueue jRequest;
@@ -43,6 +56,8 @@ public class Detail extends AppCompatActivity {
         ActivityDetailBinding binding = ActivityDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        DetailDatabase db = Room.databaseBuilder(getApplicationContext(), DetailDatabase.class, "database-name").build();
+        DetailDAO dDAO = db.detailDAO();
 
         Intent intent = getIntent();
         String imageURL = intent.getStringExtra(EXTRA_URL);
@@ -67,7 +82,7 @@ public class Detail extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            String summary = response.getString("summary");
+                            summary = response.getString("summary");
                             binding.summary.setText(summary);
                             String imageURL = response.getString("image");
                             Picasso.with(jContext)
