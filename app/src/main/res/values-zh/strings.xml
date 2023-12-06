@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Deezer</string>
+    <string name="del_message">你想要删除这个收藏吗?</string>
+    <string name="msg_confirm">确认</string>
+    <string name="msg_title">删除</string>
+    <string name="collection">收藏</string>
+
+</resources>

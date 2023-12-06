@@ -1,4 +1,4 @@
-package algonquin.cst2335.songsearch;
+package com.example.mydeezer;
 
 import android.content.Context;
 
