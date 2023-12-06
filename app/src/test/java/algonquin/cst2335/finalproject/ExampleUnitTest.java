@@ -1,4 +1,4 @@
-package algonquin.cst2335.songsearch;
+package algonquin.cst2335.finalproject;
 
 import org.junit.Test;
 
